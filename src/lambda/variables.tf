@@ -4,18 +4,28 @@ variable "function_name" {
 }
 
 variable "artefact_bucket_name" {
-  description = "Name of the S3 bucket containing Lambda deployment packages"
+  description = "Name of the S3 bucket containing the Lambda deployment package"
   type        = string
 }
 
-variable "timeout" {
-  description = "Lambda function timeout in seconds"
-  type        = number
-  default     = 30
+variable "knowledge_bucket_name" {
+  description = "Name of the S3 bucket containing the knowledge base"
+  type        = string
+}
+
+variable "knowledge_bucket_arn" {
+  description = "ARN of the S3 bucket containing the knowledge base"
+  type        = string
 }
 
 variable "memory_size" {
-  description = "Lambda function memory allocation in MB"
+  description = "Amount of memory in MB for the Lambda function"
   type        = number
-  default     = 512
+  default     = 256
+}
+
+variable "timeout" {
+  description = "Timeout in seconds for the Lambda function"
+  type        = number
+  default     = 30
 }

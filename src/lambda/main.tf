@@ -35,6 +35,28 @@ resource "aws_iam_role" "lambda_execution" {
   })
 }
 
+resource "aws_iam_role_policy" "s3_access" {
+  name = "${local.function_name}-s3-access"
+  role = aws_iam_role.lambda_execution.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ]
+        Effect = "Allow"
+        Resource = [
+          var.knowledge_bucket_arn,
+          "${var.knowledge_bucket_arn}/*"
+        ]
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
@@ -55,6 +77,7 @@ resource "aws_lambda_function" "rules_assistant" {
 
   environment {
     variables = {
+      KNOWLEDGE_BUCKET_NAME = var.knowledge_bucket_name
     }
   }
 
