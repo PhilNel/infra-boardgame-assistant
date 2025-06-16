@@ -57,9 +57,33 @@ resource "aws_iam_role_policy" "s3_access" {
   })
 }
 
+resource "aws_iam_policy" "bedrock_access" {
+  name        = "${local.function_name}-bedrock-access"
+  description = "IAM policy for Lambda to invoke Bedrock models"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "bedrock:InvokeModel",
+          "bedrock:InvokeModelWithResponseStream"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "bedrock_access" {
+  role       = aws_iam_role.lambda_execution.name
+  policy_arn = aws_iam_policy.bedrock_access.arn
 }
 
 resource "aws_lambda_function" "rules_assistant" {
