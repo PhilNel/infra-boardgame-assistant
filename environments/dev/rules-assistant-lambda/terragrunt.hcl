@@ -8,7 +8,7 @@ locals {
 }
 
 terraform {
-  source = "../../..//src//lambda"
+  source = "../../..//src//rules-assistant-lambda"
 }
 
 dependency "knowledge" {
