@@ -3,14 +3,14 @@
 # =============================================================================
 
 resource "aws_api_gateway_method" "chat_post" {
-  rest_api_id   = aws_api_gateway_rest_api.main.id
-  resource_id   = aws_api_gateway_resource.chat.id
-  http_method   = "POST"
-  authorization = "NONE"
+  rest_api_id      = aws_api_gateway_rest_api.main.id
+  resource_id      = aws_api_gateway_resource.chat.id
+  http_method      = "POST"
+  authorization    = "NONE"
   api_key_required = true
 
   request_validator_id = aws_api_gateway_request_validator.main.id
-  
+
   request_models = {
     "application/json" = aws_api_gateway_model.chat_request.name
   }
@@ -31,7 +31,7 @@ resource "aws_api_gateway_method_response" "chat_post_200" {
   }
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Origin"  = true
     "method.response.header.Access-Control-Allow-Headers" = true
     "method.response.header.Access-Control-Allow-Methods" = true
   }
@@ -79,7 +79,7 @@ resource "aws_api_gateway_method_response" "chat_post_429" {
 
   response_parameters = {
     "method.response.header.Access-Control-Allow-Origin" = true
-    "method.response.header.Retry-After" = true
+    "method.response.header.Retry-After"                 = true
   }
 }
 
@@ -112,10 +112,10 @@ resource "aws_api_gateway_method_response" "chat_options_200" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Origin"  = true
     "method.response.header.Access-Control-Allow-Headers" = true
     "method.response.header.Access-Control-Allow-Methods" = true
-    "method.response.header.Access-Control-Max-Age" = true
+    "method.response.header.Access-Control-Max-Age"       = true
   }
 }
 
@@ -139,10 +139,10 @@ resource "aws_api_gateway_integration_response" "chat_options_200" {
   status_code = aws_api_gateway_method_response.chat_options_200.status_code
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,x-api-key,Authorization'"
     "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'"
-    "method.response.header.Access-Control-Max-Age" = "'86400'"
+    "method.response.header.Access-Control-Max-Age"       = "'86400'"
   }
 }
 
@@ -151,10 +151,10 @@ resource "aws_api_gateway_integration_response" "chat_options_200" {
 # =============================================================================
 
 resource "aws_api_gateway_method" "games_get" {
-  rest_api_id   = aws_api_gateway_rest_api.main.id
-  resource_id   = aws_api_gateway_resource.games.id
-  http_method   = "GET"
-  authorization = "NONE"
+  rest_api_id      = aws_api_gateway_rest_api.main.id
+  resource_id      = aws_api_gateway_resource.games.id
+  http_method      = "GET"
+  authorization    = "NONE"
   api_key_required = true
 
   request_parameters = {
@@ -169,7 +169,7 @@ resource "aws_api_gateway_method_response" "games_get_200" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Origin"  = true
     "method.response.header.Access-Control-Allow-Headers" = true
     "method.response.header.Access-Control-Allow-Methods" = true
   }
@@ -189,10 +189,10 @@ resource "aws_api_gateway_method_response" "games_options_200" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Origin"  = true
     "method.response.header.Access-Control-Allow-Headers" = true
     "method.response.header.Access-Control-Allow-Methods" = true
-    "method.response.header.Access-Control-Max-Age" = true
+    "method.response.header.Access-Control-Max-Age"       = true
   }
 }
 
@@ -216,10 +216,10 @@ resource "aws_api_gateway_integration_response" "games_options_200" {
   status_code = aws_api_gateway_method_response.games_options_200.status_code
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,x-api-key,Authorization'"
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
-    "method.response.header.Access-Control-Max-Age" = "'86400'"
+    "method.response.header.Access-Control-Max-Age"       = "'86400'"
   }
 }
 
@@ -252,7 +252,7 @@ resource "aws_api_gateway_integration_response" "games_get_200" {
   }
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,x-api-key,Authorization'"
     "method.response.header.Access-Control-Allow-Methods" = "'GET,OPTIONS'"
   }

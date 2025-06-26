@@ -13,9 +13,9 @@ locals {
   function_name = var.function_name
 }
 
-data "aws_s3_object" "rules_assistant" {
+data "aws_s3_object" "knowledge_processor" {
   bucket = var.artefact_bucket_name
-  key    = "go-boardgame-rules-assistant.zip"
+  key    = "go-boardgame-knowledge-processor.zip"
 }
 
 resource "aws_iam_role" "lambda_execution" {
@@ -35,8 +35,8 @@ resource "aws_iam_role" "lambda_execution" {
   })
 }
 
-resource "aws_iam_role_policy" "dynamodb_access" {
-  name = "${local.function_name}-dynamodb-access"
+resource "aws_iam_role_policy" "s3_access" {
+  name = "${local.function_name}-s3-access"
   role = aws_iam_role.lambda_execution.id
 
   policy = jsonencode({
@@ -44,14 +44,13 @@ resource "aws_iam_role_policy" "dynamodb_access" {
     Statement = [
       {
         Action = [
-          "dynamodb:Query",
-          "dynamodb:GetItem",
-          "dynamodb:BatchGetItem"
+          "s3:GetObject",
+          "s3:ListBucket"
         ]
         Effect = "Allow"
         Resource = [
-          var.knowledge_table_arn,
-          "${var.knowledge_table_arn}/*"
+          var.knowledge_bucket_arn,
+          "${var.knowledge_bucket_arn}/*"
         ]
       }
     ]
@@ -60,7 +59,7 @@ resource "aws_iam_role_policy" "dynamodb_access" {
 
 resource "aws_iam_policy" "bedrock_access" {
   name        = "${local.function_name}-bedrock-access"
-  description = "IAM policy for Lambda to invoke Bedrock models"
+  description = "IAM policy for Lambda to invoke Bedrock models for embeddings"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -77,6 +76,36 @@ resource "aws_iam_policy" "bedrock_access" {
   })
 }
 
+resource "aws_iam_policy" "dynamodb_access" {
+  name        = "${local.function_name}-dynamodb-access"
+  description = "IAM policy for Lambda to access DynamoDB tables"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem"
+        ]
+        Effect = "Allow"
+        Resource = [
+          var.knowledge_table_arn,
+          var.jobs_table_arn,
+          "${var.knowledge_table_arn}/*",
+          "${var.jobs_table_arn}/*"
+        ]
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
@@ -87,7 +116,12 @@ resource "aws_iam_role_policy_attachment" "bedrock_access" {
   policy_arn = aws_iam_policy.bedrock_access.arn
 }
 
-resource "aws_lambda_function" "rules_assistant" {
+resource "aws_iam_role_policy_attachment" "dynamodb_access" {
+  role       = aws_iam_role.lambda_execution.name
+  policy_arn = aws_iam_policy.dynamodb_access.arn
+}
+
+resource "aws_lambda_function" "knowledge_processor" {
   function_name = local.function_name
   role          = aws_iam_role.lambda_execution.arn
   handler       = "bootstrap"
@@ -96,15 +130,16 @@ resource "aws_lambda_function" "rules_assistant" {
   timeout       = var.timeout
   publish       = true
 
-  s3_bucket         = data.aws_s3_object.rules_assistant.bucket
-  s3_key            = data.aws_s3_object.rules_assistant.key
-  s3_object_version = data.aws_s3_object.rules_assistant.version_id
+  s3_bucket         = data.aws_s3_object.knowledge_processor.bucket
+  s3_key            = data.aws_s3_object.knowledge_processor.key
+  s3_object_version = data.aws_s3_object.knowledge_processor.version_id
 
   environment {
     variables = {
+      KNOWLEDGE_BUCKET_NAME      = var.knowledge_bucket_name
       KNOWLEDGE_TABLE_NAME       = var.knowledge_table_name
+      JOBS_TABLE_NAME            = var.jobs_table_name
       BEDROCK_EMBEDDING_MODEL_ID = var.bedrock_embedding_model_id
-      RAG_MIN_SIMILARITY         = var.rag_min_similarity
       LOG_LEVEL                  = var.log_level
     }
   }

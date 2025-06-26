@@ -43,18 +43,18 @@ resource "aws_api_gateway_stage" "main" {
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.api_gateway_access.arn
     format = jsonencode({
-      requestId      = "$context.requestId"
-      requestTime    = "$context.requestTime"
-      httpMethod     = "$context.httpMethod"
-      resourcePath   = "$context.resourcePath"
-      status         = "$context.status"
-      protocol       = "$context.protocol"
-      responseLength = "$context.responseLength"
-      responseTime   = "$context.responseTime"
-      sourceIp       = "$context.identity.sourceIp"
-      userAgent      = "$context.identity.userAgent"
-      apiKeyId       = "$context.identity.apiKeyId"
-      error          = "$context.error.message"
+      requestId        = "$context.requestId"
+      requestTime      = "$context.requestTime"
+      httpMethod       = "$context.httpMethod"
+      resourcePath     = "$context.resourcePath"
+      status           = "$context.status"
+      protocol         = "$context.protocol"
+      responseLength   = "$context.responseLength"
+      responseTime     = "$context.responseTime"
+      sourceIp         = "$context.identity.sourceIp"
+      userAgent        = "$context.identity.userAgent"
+      apiKeyId         = "$context.identity.apiKeyId"
+      error            = "$context.error.message"
       integrationError = "$context.integration.error"
     })
   }
@@ -77,15 +77,15 @@ resource "aws_api_gateway_method_settings" "main" {
 
   settings {
     metrics_enabled = true
-    
+
     logging_level = var.api_gateway_log_level
-    
+
     data_trace_enabled = var.enable_request_response_logging
-    
+
     throttling_rate_limit  = var.stage_throttle_rate_limit
     throttling_burst_limit = var.stage_throttle_burst_limit
-    
-    caching_enabled = false
+
+    caching_enabled      = false
     cache_ttl_in_seconds = 0
   }
 }

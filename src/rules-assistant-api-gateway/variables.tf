@@ -92,22 +92,6 @@ variable "free_tier_daily_quota" {
 }
 
 # =============================================================================
-# API Key Management
-# =============================================================================
-
-variable "manual_api_key_names" {
-  description = "List of manually created API key IDs to associate with usage plans"
-  type        = list(string)
-  default     = []
-}
-
-variable "manual_api_keys_usage_plan" {
-  description = "Usage plan to associate manual API keys with (free or paid)"
-  type        = string
-  default     = "free"
-}
-
-# =============================================================================
 # Logging & Monitoring
 # =============================================================================
 

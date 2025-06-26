@@ -10,9 +10,9 @@ terraform {
 }
 
 locals {
-  api_name = "${var.environment}-boardgame-assistant-api"
+  api_name   = "${var.environment}-boardgame-assistant-api"
   stage_name = var.environment
-  
+
   # Common tags
   tags = {
     Environment = var.environment

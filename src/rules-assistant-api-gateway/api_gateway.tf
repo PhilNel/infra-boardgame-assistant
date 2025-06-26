@@ -11,10 +11,10 @@ resource "aws_api_gateway_rest_api" "main" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
+        Effect    = "Allow"
         Principal = "*"
-        Action = "execute-api:Invoke"
-        Resource = "*"
+        Action    = "execute-api:Invoke"
+        Resource  = "*"
       }
     ]
   })
@@ -78,8 +78,8 @@ resource "aws_api_gateway_resource" "games" {
 
 resource "aws_api_gateway_request_validator" "main" {
   name                        = "${local.api_name}-validator"
-  rest_api_id                = aws_api_gateway_rest_api.main.id
-  validate_request_body      = true
+  rest_api_id                 = aws_api_gateway_rest_api.main.id
+  validate_request_body       = true
   validate_request_parameters = true
 }
 
@@ -89,21 +89,21 @@ resource "aws_api_gateway_model" "chat_request" {
   content_type = "application/json"
 
   schema = jsonencode({
-    type = "object"
+    type     = "object"
     required = ["gameName", "question"]
     properties = {
       gameName = {
-        type = "string"
+        type      = "string"
         minLength = 1
         maxLength = 50
       }
       question = {
-        type = "string"
+        type      = "string"
         minLength = 1
         maxLength = 1000
       }
       session_id = {
-        type = "string"
+        type    = "string"
         pattern = "^[a-fA-F0-9-]{36}$"
       }
     }
@@ -116,7 +116,7 @@ resource "aws_api_gateway_model" "success_response" {
   content_type = "application/json"
 
   schema = jsonencode({
-    type = "object"
+    type     = "object"
     required = ["answer"]
     properties = {
       answer = {
@@ -126,7 +126,7 @@ resource "aws_api_gateway_model" "success_response" {
         type = "string"
       }
       timestamp = {
-        type = "string"
+        type   = "string"
         format = "date-time"
       }
     }
@@ -139,7 +139,7 @@ resource "aws_api_gateway_model" "error_response" {
   content_type = "application/json"
 
   schema = jsonencode({
-    type = "object"
+    type     = "object"
     required = ["error"]
     properties = {
       error = {

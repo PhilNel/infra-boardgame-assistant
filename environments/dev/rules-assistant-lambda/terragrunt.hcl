@@ -11,8 +11,8 @@ terraform {
   source = "../../..//src//rules-assistant-lambda"
 }
 
-dependency "knowledge" {
-  config_path = "../knowledge"
+dependency "knowledge_store" {
+  config_path = "../knowledge-store"
 }
 
 inputs = {
@@ -21,6 +21,6 @@ inputs = {
   memory_size           = 512
   aws_region            = local.base.aws_region
   artefact_bucket_name  = local.base.artefact_bucket_name
-  knowledge_bucket_arn  = dependency.knowledge.outputs.bucket_arn
-  knowledge_bucket_name = dependency.knowledge.outputs.bucket_name
+  knowledge_table_name  = dependency.knowledge_store.outputs.knowledge_table_name
+  knowledge_table_arn   = dependency.knowledge_store.outputs.knowledge_table_arn
 } 
