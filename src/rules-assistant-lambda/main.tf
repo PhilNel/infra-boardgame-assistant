@@ -35,8 +35,8 @@ resource "aws_iam_role" "lambda_execution" {
   })
 }
 
-resource "aws_iam_role_policy" "s3_access" {
-  name = "${local.function_name}-s3-access"
+resource "aws_iam_role_policy" "dynamodb_access" {
+  name = "${local.function_name}-dynamodb-access"
   role = aws_iam_role.lambda_execution.id
 
   policy = jsonencode({
@@ -44,14 +44,34 @@ resource "aws_iam_role_policy" "s3_access" {
     Statement = [
       {
         Action = [
-          "s3:GetObject",
-          "s3:ListBucket"
+          "dynamodb:Query",
+          "dynamodb:GetItem",
+          "dynamodb:BatchGetItem"
         ]
         Effect = "Allow"
         Resource = [
-          var.knowledge_bucket_arn,
-          "${var.knowledge_bucket_arn}/*"
+          var.knowledge_table_arn,
+          "${var.knowledge_table_arn}/*"
         ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_policy" "bedrock_access" {
+  name        = "${local.function_name}-bedrock-access"
+  description = "IAM policy for Lambda to invoke Bedrock models"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "bedrock:InvokeModel",
+          "bedrock:InvokeModelWithResponseStream"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
       }
     ]
   })
@@ -60,6 +80,11 @@ resource "aws_iam_role_policy" "s3_access" {
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_execution.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "bedrock_access" {
+  role       = aws_iam_role.lambda_execution.name
+  policy_arn = aws_iam_policy.bedrock_access.arn
 }
 
 resource "aws_lambda_function" "rules_assistant" {
@@ -77,7 +102,10 @@ resource "aws_lambda_function" "rules_assistant" {
 
   environment {
     variables = {
-      KNOWLEDGE_BUCKET_NAME = var.knowledge_bucket_name
+      KNOWLEDGE_TABLE_NAME       = var.knowledge_table_name
+      BEDROCK_EMBEDDING_MODEL_ID = var.bedrock_embedding_model_id
+      RAG_MIN_SIMILARITY         = var.rag_min_similarity
+      LOG_LEVEL                  = var.log_level
     }
   }
 
