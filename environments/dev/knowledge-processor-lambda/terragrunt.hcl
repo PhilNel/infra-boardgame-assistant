@@ -30,4 +30,5 @@ inputs = {
   knowledge_table_arn  = dependency.knowledge_store.outputs.knowledge_table_arn
   jobs_table_name      = dependency.knowledge_store.outputs.jobs_table_name
   jobs_table_arn       = dependency.knowledge_store.outputs.jobs_table_arn
+  max_chunk_tokens     = 800
 } 

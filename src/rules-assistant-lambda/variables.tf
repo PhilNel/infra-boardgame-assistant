@@ -47,3 +47,21 @@ variable "rag_min_similarity" {
   type        = number
   default     = 0.40
 }
+
+variable "bedrock_model_id" {
+  description = "Bedrock model ID for the Lambda function"
+  type        = string
+  default     = "anthropic.claude-3-haiku-20240307-v1:0"
+}
+
+variable "bedrock_max_tokens" {
+  description = "Maximum tokens for the Bedrock model"
+  type        = number
+  default     = 1500
+}
+
+variable "bedrock_top_p" {
+  description = "TopP for the Bedrock model"
+  type        = number
+  default     = 0.9
+}
