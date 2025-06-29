@@ -61,3 +61,9 @@ variable "log_level" {
   type        = string
   default     = "info"
 }
+
+variable "max_chunk_tokens" {
+  description = "Maximum number of tokens per chunk"
+  type        = number
+  default     = 500
+}
