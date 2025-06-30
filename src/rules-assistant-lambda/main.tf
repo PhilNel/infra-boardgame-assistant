@@ -106,6 +106,10 @@ resource "aws_lambda_function" "rules_assistant" {
       BEDROCK_EMBEDDING_MODEL_ID = var.bedrock_embedding_model_id
       RAG_MIN_SIMILARITY         = var.rag_min_similarity
       LOG_LEVEL                  = var.log_level
+      BEDROCK_MODEL_ID           = var.bedrock_model_id
+      BEDROCK_MAX_TOKENS         = var.bedrock_max_tokens
+      BEDROCK_ANSWER_TOP_P       = var.bedrock_top_p
+      RAG_MAX_TOKENS             = var.rag_max_tokens
     }
   }
 

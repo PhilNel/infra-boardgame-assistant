@@ -141,6 +141,7 @@ resource "aws_lambda_function" "knowledge_processor" {
       JOBS_TABLE_NAME            = var.jobs_table_name
       BEDROCK_EMBEDDING_MODEL_ID = var.bedrock_embedding_model_id
       LOG_LEVEL                  = var.log_level
+      MAX_CHUNK_TOKENS           = var.max_chunk_tokens
     }
   }
 
