@@ -65,3 +65,9 @@ variable "bedrock_top_p" {
   type        = number
   default     = 0.9
 }
+
+variable "rag_max_tokens" {
+  description = "Maximum tokens for the RAG"
+  type        = number
+  default     = 2000
+}

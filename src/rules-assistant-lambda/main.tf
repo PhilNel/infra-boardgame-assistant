@@ -109,6 +109,7 @@ resource "aws_lambda_function" "rules_assistant" {
       BEDROCK_MODEL_ID           = var.bedrock_model_id
       BEDROCK_MAX_TOKENS         = var.bedrock_max_tokens
       BEDROCK_ANSWER_TOP_P       = var.bedrock_top_p
+      RAG_MAX_TOKENS             = var.rag_max_tokens
     }
   }
 
