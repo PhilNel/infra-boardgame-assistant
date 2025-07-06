@@ -24,6 +24,28 @@ variable "lambda_function_name" {
 }
 
 # =============================================================================
+# Custom Domain Configuration
+# =============================================================================
+
+variable "custom_domain_name" {
+  description = "Custom domain name for the API (e.g., api.boardgamewarlock.com)"
+  type        = string
+  default     = ""
+}
+
+variable "hosted_zone_id" {
+  description = "Route53 hosted zone ID for the custom domain"
+  type        = string
+  default     = ""
+}
+
+variable "certificate_arn" {
+  description = "ACM certificate ARN for the custom domain (required when using custom domain)"
+  type        = string
+  default     = ""
+}
+
+# =============================================================================
 # CORS Configuration
 # =============================================================================
 
