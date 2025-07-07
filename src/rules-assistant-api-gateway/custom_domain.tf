@@ -3,8 +3,8 @@ locals {
 }
 
 resource "aws_api_gateway_domain_name" "api" {
-  count                   = local.use_custom_domain ? 1 : 0
-  domain_name             = var.custom_domain_name
+  count                    = local.use_custom_domain ? 1 : 0
+  domain_name              = var.custom_domain_name
   regional_certificate_arn = var.certificate_arn
 
   endpoint_configuration {

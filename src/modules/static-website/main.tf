@@ -57,16 +57,16 @@ resource "aws_s3_bucket_policy" "website" {
         Action   = "s3:GetObject"
         Resource = "${aws_s3_bucket.website.arn}/*"
       }
-    ] : [
+      ] : [
       # Public access (when CloudFront is disabled)
       {
-        Sid       = "PublicReadGetObject"
-        Effect    = "Allow"
+        Sid    = "PublicReadGetObject"
+        Effect = "Allow"
         Principal = {
           AWS = "*"
         }
-        Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.website.arn}/*"
+        Action   = "s3:GetObject"
+        Resource = "${aws_s3_bucket.website.arn}/*"
       }
     ]
   })
