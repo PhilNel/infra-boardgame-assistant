@@ -25,14 +25,14 @@ resource "aws_route53_record" "website" {
 
 # Route53 record for API Gateway (api.boardgamewarlock.com)
 resource "aws_route53_record" "api" {
-  count   = var.api_cloudfront_domain_name != "" ? 1 : 0
+  count   = var.api_regional_domain_name != "" ? 1 : 0
   zone_id = var.hosted_zone_id
   name    = var.api_domain_name
   type    = "A"
 
   alias {
-    name                   = var.api_cloudfront_domain_name
-    zone_id                = var.api_cloudfront_zone_id
+    name                   = var.api_regional_domain_name
+    zone_id                = var.api_regional_zone_id
     evaluate_target_health = false
   }
 } 

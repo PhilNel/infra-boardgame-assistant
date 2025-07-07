@@ -32,8 +32,8 @@ dependency "api_gateway" {
   config_path = "../rules-assistant-api-gateway"
   
   mock_outputs = {
-    custom_domain_cloudfront_domain_name = "d987654321.cloudfront.net"
-    custom_domain_cloudfront_zone_id     = "Z2FDTNDATAQYW2"
+    custom_domain_regional_domain_name = "api123456789.execute-api.us-east-1.amazonaws.com"
+    custom_domain_regional_zone_id     = "Z1UJRXOUMOOFQ8"
   }
 }
 
@@ -46,6 +46,6 @@ inputs = {
   website_cloudfront_zone_id     = dependency.website.outputs.cloudfront_hosted_zone_id
   
   # API Gateway DNS configuration
-  api_cloudfront_domain_name = dependency.api_gateway.outputs.custom_domain_cloudfront_domain_name
-  api_cloudfront_zone_id     = dependency.api_gateway.outputs.custom_domain_cloudfront_zone_id
+  api_regional_domain_name = dependency.api_gateway.outputs.custom_domain_regional_domain_name
+  api_regional_zone_id     = dependency.api_gateway.outputs.custom_domain_regional_zone_id
 } 

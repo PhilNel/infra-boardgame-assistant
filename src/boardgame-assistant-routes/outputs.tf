@@ -5,5 +5,5 @@ output "website_record_fqdn" {
 
 output "api_record_fqdn" {
   description = "FQDN of the API Gateway DNS record (api.boardgamewarlock.com)"
-  value       = var.api_cloudfront_domain_name != "" ? aws_route53_record.api[0].fqdn : null
+  value       = var.api_regional_domain_name != "" ? aws_route53_record.api[0].fqdn : null
 }

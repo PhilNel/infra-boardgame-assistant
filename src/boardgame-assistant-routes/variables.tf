@@ -29,14 +29,14 @@ variable "api_domain_name" {
   default     = "api.boardgamewarlock.com"
 }
 
-variable "api_cloudfront_domain_name" {
-  description = "CloudFront domain name for the API Gateway"
+variable "api_regional_domain_name" {
+  description = "Regional domain name for the API Gateway"
   type        = string
   default     = ""
 }
 
-variable "api_cloudfront_zone_id" {
-  description = "CloudFront hosted zone ID for the API Gateway"
+variable "api_regional_zone_id" {
+  description = "Regional zone ID for the API Gateway"
   type        = string
   default     = ""
 } 

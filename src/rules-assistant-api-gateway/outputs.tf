@@ -41,13 +41,13 @@ output "custom_domain_name" {
   value       = var.custom_domain_name != "" ? var.custom_domain_name : null
 }
 
-output "custom_domain_cloudfront_domain_name" {
-  description = "CloudFront domain name for the custom domain"
+output "custom_domain_regional_domain_name" {
+  description = "Regional domain name for the API Gateway custom domain"
   value       = var.custom_domain_name != "" && var.hosted_zone_id != "" ? aws_api_gateway_domain_name.api[0].regional_domain_name : null
 }
 
-output "custom_domain_cloudfront_zone_id" {
-  description = "CloudFront zone ID for the custom domain"
+output "custom_domain_regional_zone_id" {
+  description = "Regional zone ID for the API Gateway custom domain"
   value       = var.custom_domain_name != "" && var.hosted_zone_id != "" ? aws_api_gateway_domain_name.api[0].regional_zone_id : null
 }
 
