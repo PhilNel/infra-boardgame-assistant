@@ -27,4 +27,6 @@ inputs = {
   bedrock_top_p         = 0.9
   rag_min_similarity    = 0.25
   rag_max_tokens        = 2500
+  rag_vector_weight     = 0.7
+  rag_keyword_weight    = 0.3
 } 
