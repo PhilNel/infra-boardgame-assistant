@@ -71,3 +71,15 @@ variable "rag_max_tokens" {
   type        = number
   default     = 2000
 }
+
+variable "rag_vector_weight" {
+  description = "Weight for vector search in hybrid mode"
+  type        = number
+  default     = 0.7
+}
+
+variable "rag_keyword_weight" {
+  description = "Weight for keyword search in hybrid mode"
+  type        = number
+  default     = 0.3
+}

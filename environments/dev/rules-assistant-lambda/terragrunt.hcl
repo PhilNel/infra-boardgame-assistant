@@ -25,6 +25,8 @@ inputs = {
   knowledge_table_arn   = dependency.knowledge_store.outputs.knowledge_table_arn
   bedrock_model_id      = "anthropic.claude-3-haiku-20240307-v1:0"
   bedrock_top_p         = 0.9
-  rag_min_similarity    = 0.30
+  rag_min_similarity    = 0.25
   rag_max_tokens        = 2500
+  rag_vector_weight     = 0.7
+  rag_keyword_weight    = 0.3
 } 
