@@ -39,4 +39,23 @@ variable "api_regional_zone_id" {
   description = "Regional zone ID for the API Gateway"
   type        = string
   default     = ""
+}
+
+# Feedback API configuration (feedback.boardgamewarlock.com)
+variable "feedback_api_domain_name" {
+  description = "Feedback API Gateway domain name"
+  type        = string
+  default     = "feedback.boardgamewarlock.com"
+}
+
+variable "feedback_api_regional_domain_name" {
+  description = "Regional domain name for the Feedback API Gateway"
+  type        = string
+  default     = ""
+}
+
+variable "feedback_api_regional_zone_id" {
+  description = "Regional zone ID for the Feedback API Gateway"
+  type        = string
+  default     = ""
 } 

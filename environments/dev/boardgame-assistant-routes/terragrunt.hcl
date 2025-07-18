@@ -37,6 +37,15 @@ dependency "api_gateway" {
   }
 }
 
+dependency "feedback_api_gateway" {
+  config_path = "../feedback-handler-api-gateway"
+  
+  mock_outputs = {
+    regional_domain_name = "feedback123456789.execute-api.us-east-1.amazonaws.com"
+    regional_zone_id     = "Z1UJRXOUMOOFQ8"
+  }
+}
+
 inputs = {
   environment    = local.base.environment
   hosted_zone_id = dependency.route53.outputs.hosted_zone_id
@@ -48,4 +57,8 @@ inputs = {
   # API Gateway DNS configuration
   api_regional_domain_name = dependency.api_gateway.outputs.custom_domain_regional_domain_name
   api_regional_zone_id     = dependency.api_gateway.outputs.custom_domain_regional_zone_id
+  
+  # Feedback API Gateway DNS configuration
+  feedback_api_regional_domain_name = dependency.feedback_api_gateway.outputs.regional_domain_name
+  feedback_api_regional_zone_id     = dependency.feedback_api_gateway.outputs.regional_zone_id
 } 

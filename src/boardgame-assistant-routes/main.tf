@@ -35,4 +35,18 @@ resource "aws_route53_record" "api" {
     zone_id                = var.api_regional_zone_id
     evaluate_target_health = false
   }
+}
+
+# Route53 record for Feedback API Gateway (feedback.boardgamewarlock.com)
+resource "aws_route53_record" "feedback_api" {
+  count   = var.feedback_api_regional_domain_name != "" ? 1 : 0
+  zone_id = var.hosted_zone_id
+  name    = var.feedback_api_domain_name
+  type    = "A"
+
+  alias {
+    name                   = var.feedback_api_regional_domain_name
+    zone_id                = var.feedback_api_regional_zone_id
+    evaluate_target_health = false
+  }
 } 
