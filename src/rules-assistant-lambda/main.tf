@@ -51,7 +51,9 @@ resource "aws_iam_role_policy" "dynamodb_access" {
         Effect = "Allow"
         Resource = [
           var.knowledge_table_arn,
-          "${var.knowledge_table_arn}/*"
+          "${var.knowledge_table_arn}/*",
+          var.references_table_arn,
+          "${var.references_table_arn}/*"
         ]
       }
     ]
@@ -112,6 +114,7 @@ resource "aws_lambda_function" "rules_assistant" {
       RAG_MAX_TOKENS             = var.rag_max_tokens
       RAG_VECTOR_WEIGHT          = var.rag_vector_weight
       RAG_KEYWORD_WEIGHT         = var.rag_keyword_weight
+      REFERENCES_TABLE_NAME      = var.references_table_name
     }
   }
 

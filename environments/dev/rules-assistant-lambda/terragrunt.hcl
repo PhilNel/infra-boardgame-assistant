@@ -29,4 +29,6 @@ inputs = {
   rag_max_tokens        = 2500
   rag_vector_weight     = 0.7
   rag_keyword_weight    = 0.3
+  references_table_name = local.base.references_table_name
+  references_table_arn  = local.base.references_table_arn
 } 

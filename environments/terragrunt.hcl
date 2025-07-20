@@ -18,4 +18,6 @@ locals {
   artefact_bucket_name = "boardgame-assistant-artefacts-dev-eu-west-1"
   environment          = "dev"
   project_name         = "boardgame-assistant"
+  references_table_name = "boardgame-assistant-game-references-dev"
+  references_table_arn  = "arn:aws:dynamodb:eu-west-1:107335506223:table/boardgame-assistant-game-references-dev"
 } 
