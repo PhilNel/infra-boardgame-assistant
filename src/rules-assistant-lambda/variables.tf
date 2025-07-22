@@ -83,3 +83,19 @@ variable "rag_keyword_weight" {
   type        = number
   default     = 0.3
 }
+
+variable "references_table_name" {
+  description = "Name of the DynamoDB table for references"
+  type        = string
+}
+
+variable "references_table_arn" {
+  description = "ARN of the DynamoDB table for references"
+  type        = string
+}
+
+variable "bedrock_answer_max_tokens" {
+  description = "Maximum tokens for the Bedrock model"
+  type        = number
+  default     = 1500
+}
