@@ -115,6 +115,7 @@ resource "aws_lambda_function" "rules_assistant" {
       RAG_VECTOR_WEIGHT          = var.rag_vector_weight
       RAG_KEYWORD_WEIGHT         = var.rag_keyword_weight
       REFERENCES_TABLE_NAME      = var.references_table_name
+      BEDROCK_ANSWER_MAX_TOKENS  = var.bedrock_answer_max_tokens
     }
   }
 
