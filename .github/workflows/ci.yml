@@ -8,45 +8,11 @@ on:
 
 jobs:
   lint:
-    name: Lint Terraform
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_wrapper: false
-
-      - name: Format check
-        run: terraform fmt -check -recursive
-
-      - name: Validate Terraform
-        run: terraform validate
-
-      - name: Install TFLint
-        uses: terraform-linters/setup-tflint@v4
-        with:
-          tflint_version: v0.58.0
-      
-      - name: Run TFLint
-        run: tflint --recursive
+    uses: PhilNel/shared-infra-workflows/.github/workflows/lint.yml@v1.0.0
+    with:
+      tflint_version: "v0.58.0"
 
   scan:
-    name: Security Scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy config scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: config
-          scan-ref: .
-          ignore-unfixed: true
-          severity: HIGH,CRITICAL
-          skip-dirs: .terraform,.terragrunt-cache,environments 
+    uses: PhilNel/shared-infra-workflows/.github/workflows/security-scan.yml@v1.0.0
+    with:
+      skip_dirs: ".terraform,.terragrunt-cache,environments"
